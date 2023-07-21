@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Index {% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for ('static', filename='css/styles.css') }}">
+        <script src="https://kit.fontawesome.com/43e3ba27ff.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </head>
+    
+<body>
+    
+    <header class="header">
+        <div class="logo">
+            <img src="../static/images/logom.png" alt="logo del museo">
+        </div>
+        <nav>
+            <ul class="navbar">
+                <li><a href="../../administrador/templates/indexa.html"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    </div>
+    <footer class="footer">
+        <div class="gruop1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="../static/images/logom.png" alt="Logo"> </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>Sobre nosotros</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, expedita.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, expedita.</p>
+            </div>
+            <div class="box">
+                <h2>Siguenos</h2>
+                <div class="socialmedia">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+                
+            </div>
+        </div>
+        <div class="g2">
+            <small>&copy;2023 <b>Secretaria de Turismo</b>- Todos los Derechos Reservados</small>
+        </div>
+    </footer> 
+   
+</body>
+</html>

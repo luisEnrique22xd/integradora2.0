@@ -1,0 +1,16 @@
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px;
+}
+
+.form-row .col {
+  padding-right: 5px;
+  padding-left: 5px;
+}
