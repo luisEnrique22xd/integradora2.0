@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} Visitantes
+{% endblock %}
+
+{% block content %}
+<h1>Registro de Visitantes</h1>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+<h1>Lista de Visitantes</h1>
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Origen</th>
+            <th>Edad</th>
+            <th>Genero</th>
+            <th>institucion</th>
+            <th>Fecha de registro</th>
+        </tr>
+        {% for visitante in visitantes %}
+        <tr>
+            <td>{{ visitante.nombre }}</td>
+            <td>{{ visitante.ape_pat }}</td>
+            <td>{{ visitante.ape_Mat }}</td>
+            <td>{{ visitante.Origen }}</td>
+            <td>{{ visitante.edad }}</td>
+            <td>{{ visitante.genero }}</td>
+            <td>{{ visitante.institucion }}</td>
+            <td>{{ visitante.fecha_registro }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <input type="submit" value="Registrarse">
+        <a href="#" onclick="goBack()">Regresar</a>
+{% endblock%}
