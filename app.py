@@ -17,8 +17,8 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        tipo_usuario = request.form['tipo_usuario']
-        if tipo_usuario == 'Admin':
+        tipoCargo = request.form['tipoCargo']
+        if tipoCargo == 'Administrador':
             # Redireccionar al usuario a la sesión de admin
             return redirect(url_for('sesion_admin'))
         elif tipo_usuario == 'Ayudante':
