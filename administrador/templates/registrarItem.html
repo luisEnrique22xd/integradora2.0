@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "basead.html" %}
 
 {% block content %}
 <h1>Registro de Item</h1>
@@ -16,8 +16,8 @@
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required><br>
 
-        <label for="id_origen">Origen:</label>
-        <select id="id_origen" name="id_origen" required><br>
+        <label for="origen">Origen:</label>
+        <select id="origen" name="origen" required><br>
             <option value="1">Huamatla-Tlaxcala-Mexico</option>
             <option value="2">Apizaco-Tlaxcala-Mexico</option>
         </select><br>
@@ -30,14 +30,14 @@
         <label for="fecha_registro">Fecha de Registro:</label>
         <input type="date" id="fecha_registro" name="fecha_registro" required><br>
         
-        <label for="id_categoria">Categoria:</label>
-        <select id="id_categoria" name="id_categoria" required><br>
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" name="categoria" required><br>
             <option value="1">Atracciones</option>
             <option value="2">...</option>
         </select><br>
 
-        <label for="id_temporada">Temporada:</label>
-            <select id="id_temporada" name="id_temporada" required>
+        <label for="temporada">Temporada:</label>
+            <select id="temporada" name="temporada" required>
                 <option value="1">Feria Huamatla</option>
                 <option value="2">...</option>
             </select><br>
@@ -51,7 +51,7 @@
         </select><br>
         
         <input type="submit" value="Registrar">
-        <a href="#" onclick="goBack()">Cancelar</a>
+        <button href="#" onclick="goBack()"> Regresar</button>
 
     </form>
 </div>

@@ -1,9 +1,14 @@
-{% extends "base.html" %}
+{% extends "basead.html" %}
 
 {% block title %} Usuarios
 {% endblock %}
 
 {% block content %}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script> 
 <h1>Lista de Usuarios</h1>
     <table border="1">
         <tr>
@@ -23,4 +28,5 @@
         </tr>
         {% endfor %}
     </table>
+    <button href="#" onclick="goBack()">Regresar</button>
 {% endblock%}

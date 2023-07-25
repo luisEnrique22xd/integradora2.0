@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,14 @@
         <link rel="stylesheet" href="{{ url_for ('static', filename='css/styles.css') }}">
         <script src="https://kit.fontawesome.com/43e3ba27ff.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-        <script>
-            function goBack() {
-                window.history.back();
-            }
-        </script>    
     </head>
+    
 <body>
+    
     <header class="header">
         <div class="logo">
             <a href="{{ url_for('Administrador') }}">
-            <img src="../static/images/logom.png" src="" alt="logo del museo">
+            <img src="../static/images/logom.png"  alt="logo del museo">
         </a>
         </div>
         <nav>
@@ -29,31 +27,11 @@
             </ul>
         </nav>
     </header>
-    <h1>Lista de Items</h1>
-    <table border="1" >
-        <tr>
-            <th>Nombre</th>
-            <th>Origen</th>
-            <th>Modo de Adquisicion</th>
-            <th>Fecha de Registro</th>
-            <th>Categoria</th>
-            <th>Temporada</th>
-            <th>Condicion</th>
-        </tr>
-        {% for item in items%}
-        <tr>
-            <td>{{ item.nombre }}</td>
-            <td>{{ item.lugar }}</td>
-            <td>{{ item.modo }}</td>
-            <td>{{ item.fecha_registro }}</td>
-            <td>{{ item.nombre_cat }}</td>
-            <td>{{ item.nombreTemp }}</td>
-            <td>{{ item.condicion }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <!--<a href="#" onclick="goBack()">Cancelar</a>-->
-    <button href="#" onclick="goBack()"> Regresar</button>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    </div>
     <footer class="footer">
         <div class="gruop1">
             <div class="box">
@@ -85,5 +63,3 @@
    
 </body>
 </html>
-
-    

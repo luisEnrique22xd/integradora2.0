@@ -18,9 +18,11 @@ admin_bp = Blueprint('admin', __name__, template_folder='administrador/templates
 ayudante_bp = Blueprint('ayudante', __name__, template_folder='ayudante/templates')
 app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(ayudante_bp, url_prefix='/ayudante')
-@app.route('/')
-def home():
+
+@app.route('/inicio', endpoint='inicio.index')
+def inicio():
     return render_template("index.html")
+
 
 @app.route("/registro", methods=['GET','POST'])
 
@@ -99,11 +101,11 @@ def registrarItem():
         print(request.form)
 
         nombre = request.form['nombre']
-        id_origen = request.form['id_origen']
+        origen = request.form['origen']
         modAdqui = request.form['modAdqui']
         fecha_registro = request.form['fecha_registro']
-        id_categoria = request.form['id_categoria']
-        id_temporada= request.form['id_temporada']
+        categoria = request.form['categoria']
+        temporada= request.form['temporada']
         condicion= request.form['condicion']
 
         
@@ -114,8 +116,8 @@ def registrarItem():
             cursor = mydb.cursor()
 
             # Consulta SQL para insertar los datos en la tabla de usuarios
-            sql = "INSERT INTO item (nombre, id_origen, modAdqui, fecha_registro, id_categoria, id_temporada, condicion) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            val = (nombre, id_origen, modAdqui, fecha_registro, id_categoria, id_temporada, condicion)
+            sql = "INSERT INTO item (nombre, origen, modAdqui, fecha_registro, categoria, temporada, condicion) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (nombre, origen, modAdqui, fecha_registro, categoria, temporada, condicion)
 
             # Ejecutar la consulta SQL
             cursor.execute(sql, val)
@@ -142,15 +144,17 @@ def registrarItem():
 
 @app.route('/item')
 def item():
-         mydb = get_connection()
-         cursor = mydb.cursor(dictionary=True)
-         cursor = mydb.cursor(dictionary=True)
-         cursor.execute('SELECT nombre, id_origen, modAdqui, fecha_registro, id_categoria, id_temporada, condicion FROM item')
-         items = cursor.fetchall()
-         cursor.close()
-         return render_template('item.html', item=items)
+        try: 
+          mydb = get_connection()
+          cursor = mydb.cursor(dictionary=True)
+          cursor.execute('SELECT item.nombre, origenitem.lugar, modadqui.modo, item.fecha_registro,categoria.nombre_cat, temporada.nombreTemp, item.condicion FROM item INNER JOIN modadqui ON item.modAdqui = modadqui.Adqui  INNER JOIN categoria ON item.categoria = categoria.categoria INNER JOIN origenitem ON item.origen = origenitem.id_origen INNER JOIN temporada ON item.temporada = temporada.temporada;')
+          items = cursor.fetchall()
+          print(items)
+          return render_template('item.html', items=items)
     # Renderiza la plantilla HTML con los resultados
-
+        except Exception as e:
+         print("Error al obtener los items:", str(e))
+        return render_template('error.html', mensaje='Error al obtener los items')
 
 @app.route('/Ayudante')
 def Ayudante():
