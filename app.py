@@ -3,6 +3,7 @@ import mysql.connector
 from models.db import get_connection
 usuarios_registrados = []
 visitantes_registrados = []
+items_registrados = []
 
 
 app = Flask(__name__, template_folder='inicio/templates' , static_folder='inicio/static' )
@@ -90,6 +91,66 @@ def Administrador():
     # Lógica para la sesión de administrador
     return render_template('indexad.html')
 
+@app.route("/registrarItem", methods=['GET','POST'])
+
+def registrarItem():
+    if request.method == 'POST':
+        # Obtener los datos enviados desde el formulario
+        print(request.form)
+
+        nombre = request.form['nombre']
+        id_origen = request.form['id_origen']
+        modAdqui = request.form['modAdqui']
+        fecha_registro = request.form['fecha_registro']
+        id_categoria = request.form['id_categoria']
+        id_temporada= request.form['id_temporada']
+        condicion= request.form['condicion']
+
+        
+
+        try:
+            # Obtener la conexión a la base de datos
+            mydb = get_connection()
+            cursor = mydb.cursor()
+
+            # Consulta SQL para insertar los datos en la tabla de usuarios
+            sql = "INSERT INTO item (nombre, id_origen, modAdqui, fecha_registro, id_categoria, id_temporada, condicion) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (nombre, id_origen, modAdqui, fecha_registro, id_categoria, id_temporada, condicion)
+
+            # Ejecutar la consulta SQL
+            cursor.execute(sql, val)
+
+            # Confirmar los cambios en la base de datos
+            mydb.commit()
+
+            # Cerrar el cursor y la conexión a la base de datos
+            cursor.close()
+            mydb.close()
+
+            # Redireccionar a la página de inicio después de registrar al usuario
+            return redirect(url_for('registrarItem'))
+
+        except Exception as e:
+            # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
+            print("Error al insertar datos en la base de datos:", str(e))
+            return render_template('error.html', mensaje='Error al registrar al usuario')
+
+    else:
+        # Mostrar el formulario de registro
+        return render_template('registrarItem.html')
+    
+
+@app.route('/item')
+def item():
+         mydb = get_connection()
+         cursor = mydb.cursor(dictionary=True)
+         cursor = mydb.cursor(dictionary=True)
+         cursor.execute('SELECT nombre, id_origen, modAdqui, fecha_registro, id_categoria, id_temporada, condicion FROM item')
+         items = cursor.fetchall()
+         cursor.close()
+         return render_template('item.html', item=items)
+    # Renderiza la plantilla HTML con los resultados
+
 
 @app.route('/Ayudante')
 def Ayudante():
@@ -143,6 +204,7 @@ def registroVisitante():
     else:
         # Mostrar el formulario de registro
         return render_template('registroVisitante.html')
+    
 @app.route('/visitante')
 def visitante():
          mydb = get_connection()
@@ -154,14 +216,15 @@ def visitante():
          return render_template('visitante.html', visitantes=visitantes)
     # Renderiza la plantilla HTML con los resultados
 
-@app.route('/user')
-def usuarios():
+@app.route('/usuario')
+def usuario():
    cursor = mydb.cursor(dictionary=True)
    cursor.execute('SELECT nombre, apellidos, tipoCargo, nomUsuario,contrasenia FROM usuario')
    usuarios = cursor.fetchall()
    cursor.close()
-   return render_template('user.html', usuarios=usuarios)
+   return render_template('user.html', usuario=usuarios)
     # Renderiza la plantilla HTML con los resultados
+    # cambie el usuario= usuarios 
 
 
 if __name__ == '__main__':

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} Items
+{% endblock %}
+
+{% block content %}
+<h1>Lista de Items</h1>
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Origen</th>
+            <th>Modo de Adquisicion</th>
+            <th>Fecha de Registro</th>
+            <th>Categoria</th>
+            <th>Temporada</th>
+            <th>Condicion</th>
+        </tr>
+        {% for item in item %}
+        <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.id_origen }}</td>
+            <td>{{ item.modAdqui }}</td>
+            <td>{{ item.fecha_registro }}</td>
+            <td>{{ item.id_categoria }}</td>
+            <td>{{ item.id_temporada }}</td>
+            <td>{{ item.condicion }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock%}
