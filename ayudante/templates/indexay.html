@@ -10,12 +10,16 @@
 <body>
 <header class="header">
     <div class="logo">
-        <img src="../static/images/logom.png" alt="logo del museo">
+        <a href="{{ url_for('Administrador')}}">
+            <img src="../static/images/logom.png" alt="logo del museo">
+            </a>
     </div>
     <nav>
         <ul class="navbar">
             <li><a href="{{ url_for('registroVisitante') }}">Registrar Visitantes</a></li>
-            <li><a href="{{ url_for('visitante') }}">Ver Visitantes</a></li>
+            <li><a href="{{ url_for('visitante') }}">Ver Visitantes</a></li>            
+            <li><a href="{{ url_for('visitas') }}">Ver Visitas</a></li>            
+            <li><a href="{{ url_for('item') }}">Ver items</a></li>
             <li><a href="{{ url_for('inicio.index') }}">Cerrar Sesion</a></li>
         </ul>
     </nav>

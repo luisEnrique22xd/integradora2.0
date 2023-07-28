@@ -16,7 +16,6 @@
             <th>Apellidos</th>
             <th>Tipo de Cargo</th>
             <th>Nombre de Usuario</th>
-            <th>Contraseña</th>
         </tr>
         {% for usuario in usuario %}
         <tr>
@@ -24,7 +23,6 @@
             <td>{{ usuario.apellidos }}</td>
             <td>{{ usuario.tipoCargo }}</td>
             <td>{{ usuario.nomUsuario }}</td>
-            <td>{{ usuario.contrasenia }}</td>
         </tr>
         {% endfor %}
     </table>

@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block content %}
-<h1>Registro de Visitantes</h1>
 <script>
     function goBack() {
         window.history.back();
@@ -13,6 +12,7 @@
 <h1>Lista de Visitantes</h1>
     <table border="1">
         <tr>
+            <th>ID</th>
             <th>Nombre</th>
             <th>Apellido Paterno</th>
             <th>Apellido Materno</th>
@@ -24,6 +24,7 @@
         </tr>
         {% for visitante in visitantes %}
         <tr>
+            <td>{{visitante.id_visitante}}</td>
             <td>{{ visitante.nombre }}</td>
             <td>{{ visitante.ape_pat }}</td>
             <td>{{ visitante.ape_Mat }}</td>
@@ -35,6 +36,6 @@
         </tr>
         {% endfor %}
     </table>
-    <input type="submit" value="Registrarse">
+    <a href="registroVisitas">Registrar Visita</a>
     <button href="#" onclick="goBack()"> Cancelar</button>
-{% endblock%}
+{% endblock %}
