@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Blueprint, flash, jsonify
 import mysql.connector
 import os 
+import time
 from models.db import get_connection
 usuarios_registrados = []
 visitantes_registrados = []
@@ -9,6 +10,7 @@ visitas=[]
 
 
 app = Flask(__name__, template_folder='inicio/templates' , static_folder='inicio/static' )
+app.secret_key= ''
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -76,15 +78,15 @@ def registro():
 def verificar_credenciales(username, password):
     try:
         mydb = get_connection()
-        cursor = mydb.cursor()
-        sql = "SELECT * FROM usuario WHERE nomUsuario = %s"
-        cursor.execute(sql, (username,))
+        cursor = mydb.cursor(dictionary=True)
+        sql = f"SELECT * FROM usuario WHERE nomUsuario = '{username}'"
+        cursor.execute(sql)
         user_data = cursor.fetchone()
         cursor.close()
         mydb.close()
 
         if user_data and user_data['contrasenia'] == password:
-            return True
+            return user_data
         return False
 
     except Exception as e:
@@ -93,28 +95,36 @@ def verificar_credenciales(username, password):
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-       if request.method == 'POST':
-        tipoCargo = request.form['tipoCargo']
-        if tipoCargo == 'Administrador':
+    if request.method == 'POST':
+        #tipoCargo = request.form['tipoCargo']
+        user_valid = verificar_credenciales(request.form['nomUsuario'], request.form['password'])
+        if user_valid == False:
+            flash('Tipo de usuario no válido. Por favor, verifica tus datos' , 'error')
+            return redirect(url_for('login'))  # Redirigir al formulario de inicio de sesión nuevamente.    
+        if user_valid['tipoCargo'] == 'Administrador':
             # Redireccionar al usuario a la sesión de admin
+            session['usuario'] = user_valid
             return redirect(url_for('Administrador'))
-        elif tipoCargo == 'Ayudante':
+        elif user_valid['tipoCargo'] == 'Ayudante':
             # Redireccionar al usuario a la sesión de ayudante
+            session['usuario'] = user_valid
             return redirect(url_for('Ayudante'))
-        flash('Tipo de usuario no válido. Por favor, verifica tus datos' , 'error')
-        return redirect(url_for('login'))  # Redirigir al formulario de inicio de sesión nuevamente.
+        #flash('Tipo de usuario no válido. Por favor, verifica tus datos' , 'error')
+        #return redirect(url_for('login'))  # Redirigir al formulario de inicio de sesión nuevamente.
 
-       else:
+    else:
         # Renderizar el formulario de inicio de sesión si es una solicitud GET
         return render_template('login.html')
 
-@app.route('/Administrador')
+@app.route('/Administrador') 
 def Administrador():
     # Lógica para la sesión de administrador
-    return render_template('indexad.html')
+    if session['usuario']['tipoCargo'] == 'Administrador':
+        return render_template('indexad.html')
+    else:
+        return redirect (url_for('Ayudante'))
 
 @app.route("/registrarItem", methods=['GET','POST'])
-
 def registrarItem():
     if request.method == 'POST':
         # Obtener los datos enviados desde el formulario
@@ -127,8 +137,6 @@ def registrarItem():
         categoria = request.form['categoria']
         temporada= request.form['temporada']
         condicion= request.form['condicion']
-
-        
 
         try:
             # Obtener la conexión a la base de datos
@@ -159,8 +167,142 @@ def registrarItem():
 
     else:
         # Mostrar el formulario de registro
-        return render_template('registrarItem.html')
-    
+        # Consultar origenitem
+        mydb = get_connection()
+        cursor = mydb.cursor(dictionary=True )
+        sql = ('SELECT * FROM origenitem')
+        cursor.execute(sql)
+        origenes=cursor.fetchall()
+        #mydb.commit()
+        #modos de adquisicion
+        sql1= ('SELECT * FROM modadqui')
+        cursor.execute(sql1)
+        modosadqui=cursor.fetchall()
+        # categorias
+        sql2= ('SELECT * FROM categoria')
+        cursor.execute(sql2)
+        categorias=cursor.fetchall()
+        #temporadas
+        sql3=('SELECT * FROM temporada')
+        cursor.execute(sql3)
+        temporadas=cursor.fetchall()
+        cursor.close()
+        mydb.close()
+        return render_template('registrarItem.html',origenes=origenes, modosadqui=modosadqui, categorias= categorias, temporadas=temporadas)
+
+@app.route("/registrarOrigen", methods=['GET','POST'])
+def registrarOrigen():     
+        lugar=None  
+        if request.method == 'POST':
+        # Obtener los datos enviados desde el formulario
+
+
+         lugar = request.form['lugar']
+
+        try:
+            # Obtener la conexión a la base de datos
+            mydb = get_connection()
+            cursor = mydb.cursor()
+
+            # Consulta SQL para insertar los datos en la tabla de usuarios
+            sql = "INSERT INTO origenitem (lugar) VALUES (%s)"
+            val = (lugar,)
+
+            # Ejecutar la consulta SQL
+            cursor.execute(sql, val)
+
+            # Confirmar los cambios en la base de datos
+            mydb.commit()
+
+            # Cerrar el cursor y la conexión a la base de datos
+            cursor.close()
+            mydb.close()
+            print(val)
+            # Redireccionar a la página de inicio después de registrar al usuario
+            return redirect(url_for('registrarOrigen'))
+
+        except Exception as e:
+            # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
+            print("Error al insertar datos en la base de datos:", str(e))
+            return render_template('error.html', mensaje='Error al registrar al origen')
+        
+@app.route("/registrarCategoria", methods=['GET','POST'])
+def registrarCategoria():     
+        nombre_cat=None  
+        if request.method == 'POST':
+        # Obtener los datos enviados desde el formulario
+
+
+         nombre_cat = request.form['nombre_cat']
+
+        try:
+            # Obtener la conexión a la base de datos
+            mydb = get_connection()
+            cursor = mydb.cursor()
+
+            # Consulta SQL para insertar los datos en la tabla de usuarios
+            sql = "INSERT INTO categoria (nombre_cat) VALUES (%s)"
+            val = (nombre_cat,)
+
+            # Ejecutar la consulta SQL
+            cursor.execute(sql, val)
+
+            # Confirmar los cambios en la base de datos
+            mydb.commit()
+
+            # Cerrar el cursor y la conexión a la base de datos
+            cursor.close()
+            mydb.close()
+            print(val)
+            # Redireccionar a la página de inicio después de registrar al usuario
+            return redirect(url_for('registrarCategoria'))
+
+        except Exception as e:
+            # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
+            print("Error al insertar datos en la base de datos:", str(e))
+            return render_template('error.html', mensaje='Error al registrar la categoria')
+        
+@app.route("/registrarTemporada", methods=['GET','POST'])
+def registrarTemporada():     
+        nombreTemp=None  
+        fecha_inicio=None
+        fecha_final=None
+        if request.method == 'POST':
+        
+         nombreTemp = request.form['nombreTemp']
+         fecha_inicio = request.form['fecha_inicio']
+         fecha_final = request.form['fecha_final']
+         if nombreTemp.strip() == "":
+            return render_template('error.html', mensaje='El campo "nombreTemp" no puede estar vacío.')
+
+
+        try:
+            # Obtener la conexión a la base de datos
+            mydb = get_connection()
+            cursor = mydb.cursor()
+
+            # Consulta SQL para insertar los datos en la tabla de usuarios
+            sql = "INSERT INTO temporada (nombreTemp ,fecha_inicio, fecha_final) VALUES (%s,%s,%s)"
+            val = (nombreTemp, fecha_inicio, fecha_final)
+
+            # Ejecutar la consulta SQL
+            cursor.execute(sql, val)
+
+            # Confirmar los cambios en la base de datos
+            mydb.commit()
+
+            # Cerrar el cursor y la conexión a la base de datos
+            cursor.close()
+            mydb.close()
+            print(val)
+            # Redireccionar a la página de inicio después de registrar al usuario
+            return redirect(url_for('registrarTemporada'))
+
+        except Exception as e:
+            # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
+            print("Error al insertar datos en la base de datos:", str(e))
+            return render_template('error.html', mensaje='Error al registrar la temporada')
+
 @app.route('/item')
 def item():
         try: 
@@ -178,7 +320,10 @@ def item():
 @app.route('/Ayudante')
 def Ayudante():
     # Lógica para la sesión de ayudante
-    return render_template('indexay.html')
+    if session['usuario']['tipoCargo'] == 'Ayudante':
+        return render_template('indexay.html')
+    else:
+        return redirect (url_for('Administrador'))
 
 @app.route("/registroVisitante", methods=['GET','POST'])
 
@@ -303,6 +448,17 @@ def usuario():
    return render_template('user.html', usuario=usuarios)
     # Renderiza la plantilla HTML con los resultados
     # cambie el usuario= usuarios 
+@app.route("/buscarUsuario", methods=['GET', 'POST'])
+def buscarUsuario():
+    if request.method == "POST":
+        search = request.form['buscar']
+        mydb= get_connection()
+        cursor = mydb.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM usuario WHERE nombre='%s' ORDER BY idUsuario DESC" % (search,))
+        busqueda = cursor.fetchone()
+        cursor.close()
+        
+    return render_template('usuario.html', miData = usuario, busqueda = search)
 
 
 if __name__ == '__main__':
