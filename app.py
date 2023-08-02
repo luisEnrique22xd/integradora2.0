@@ -192,12 +192,12 @@ def registrarItem():
 
 @app.route("/registrarOrigen", methods=['GET','POST'])
 def registrarOrigen():     
-        lugar=None  
-        if request.method == 'POST':
+         
+    if request.method == 'POST':
         # Obtener los datos enviados desde el formulario
 
 
-         lugar = request.form['lugar']
+        lugar = request.form['lugar']
 
         try:
             # Obtener la conexión a la base de datos
@@ -225,84 +225,82 @@ def registrarOrigen():
             # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
             print("Error al insertar datos en la base de datos:", str(e))
             return render_template('error.html', mensaje='Error al registrar al origen')
+    return render_template('registrarItem.html')     
         
 @app.route("/registrarCategoria", methods=['GET','POST'])
 def registrarCategoria():     
-        nombre_cat=None  
+         
         if request.method == 'POST':
         # Obtener los datos enviados desde el formulario
 
 
-         nombre_cat = request.form['nombre_cat']
+            nombre_cat = request.form['nombre_cat']
 
-        try:
-            # Obtener la conexión a la base de datos
-            mydb = get_connection()
-            cursor = mydb.cursor()
+            try:
+                # Obtener la conexión a la base de datos
+                mydb = get_connection()
+                cursor = mydb.cursor()
 
-            # Consulta SQL para insertar los datos en la tabla de usuarios
-            sql = "INSERT INTO categoria (nombre_cat) VALUES (%s)"
-            val = (nombre_cat,)
+                # Consulta SQL para insertar los datos en la tabla de usuarios
+                sql = "INSERT INTO categoria (nombre_cat) VALUES (%s)"
+                val = (nombre_cat,)
 
-            # Ejecutar la consulta SQL
-            cursor.execute(sql, val)
+                # Ejecutar la consulta SQL
+                cursor.execute(sql, val)
 
-            # Confirmar los cambios en la base de datos
-            mydb.commit()
+                # Confirmar los cambios en la base de datos
+                mydb.commit()
 
-            # Cerrar el cursor y la conexión a la base de datos
-            cursor.close()
-            mydb.close()
-            print(val)
-            # Redireccionar a la página de inicio después de registrar al usuario
-            return redirect(url_for('registrarCategoria'))
+                # Cerrar el cursor y la conexión a la base de datos
+                cursor.close()
+                mydb.close()
+                print(val)
+                # Redireccionar a la página de inicio después de registrar al usuario
+                return redirect(url_for('registrarCategoria'))
 
-        except Exception as e:
-            # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
-            print("Error al insertar datos en la base de datos:", str(e))
-            return render_template('error.html', mensaje='Error al registrar la categoria')
-        
+            except Exception as e:
+                # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
+                print("Error al insertar datos en la base de datos:", str(e))
+                return render_template('error.html', mensaje='Error al registrar la categoria')
+        return render_template('registrarItem.html')
+            
 @app.route("/registrarTemporada", methods=['GET','POST'])
 def registrarTemporada():     
-        nombreTemp=None  
-        fecha_inicio=None
-        fecha_final=None
         if request.method == 'POST':
         
-         nombreTemp = request.form['nombreTemp']
-         fecha_inicio = request.form['fecha_inicio']
-         fecha_final = request.form['fecha_final']
-         if nombreTemp.strip() == "":
-            return render_template('error.html', mensaje='El campo "nombreTemp" no puede estar vacío.')
+            nombreTemp = request.form['nombreTemp']
+            fecha_inicio = request.form['fecha_inicio']
+            fecha_final = request.form['fecha_final']
 
 
-        try:
+            try:
             # Obtener la conexión a la base de datos
-            mydb = get_connection()
-            cursor = mydb.cursor()
+                mydb = get_connection()
+                cursor = mydb.cursor()
 
             # Consulta SQL para insertar los datos en la tabla de usuarios
-            sql = "INSERT INTO temporada (nombreTemp ,fecha_inicio, fecha_final) VALUES (%s,%s,%s)"
-            val = (nombreTemp, fecha_inicio, fecha_final)
+                sql = "INSERT INTO temporada (nombreTemp ,fecha_inicio, fecha_final) VALUES (%s,%s,%s)"
+                val = (nombreTemp, fecha_inicio, fecha_final)
 
             # Ejecutar la consulta SQL
-            cursor.execute(sql, val)
+                cursor.execute(sql, val)
 
             # Confirmar los cambios en la base de datos
-            mydb.commit()
+                mydb.commit()
 
             # Cerrar el cursor y la conexión a la base de datos
-            cursor.close()
-            mydb.close()
-            print(val)
-            # Redireccionar a la página de inicio después de registrar al usuario
-            return redirect(url_for('registrarTemporada'))
+                cursor.close()
+                mydb.close()
+                print(val)
+                # Redireccionar a la página de inicio después de registrar al usuario
+                return redirect(url_for('registrarTemporada'))
 
-        except Exception as e:
-            # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
-            print("Error al insertar datos en la base de datos:", str(e))
+            except Exception as e:
+                # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
+                print("Error al insertar datos en la base de datos:", str(e))
             return render_template('error.html', mensaje='Error al registrar la temporada')
-
+        
+        return render_template('registrarItem.html')
 @app.route('/item')
 def item():
         try: 
@@ -454,11 +452,14 @@ def buscarUsuario():
         search = request.form['buscar']
         mydb= get_connection()
         cursor = mydb.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM usuario WHERE nombre='%s' ORDER BY idUsuario DESC" % (search,))
+        cursor.execute("SELECT * FROM usuario WHERE nombre LIKE %s ORDER BY idUsuario DESC",('%'+search+'%',))
         busqueda = cursor.fetchone()
         cursor.close()
-        
-    return render_template('usuario.html', miData = usuario, busqueda = search)
+        mydb.close()
+        if not busqueda:
+            busqueda= None
+            busqueda={'mensaje:' 'No se encontraron resultados para la busqueda'}
+    return render_template('buscarUser.html', miData = busqueda, busqueda = search)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,44 @@
+{% extends "basead.html" %}
+
+{% block title %} Usuarios
+{% endblock %}
+
+{% block content %}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script> 
+<nav>
+    <div class="search-bar">
+        <form name="formSearch" method="POST" action="{{url_for('buscarUsuario')}}" class="search" autocomplete="off">
+            <input type="search" name="buscar" class="search__input" placeholder="Buscar Usuarios">
+            <button type="submit" class="search__btn">
+                <i class="bi bi-search_icon"></i>
+                Buscar
+            </button>
+        </form>
+    </div>
+</nav>
+<h1>Lista de Usuarios</h1>
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Tipo de Cargo</th>
+            <th>Nombre de Usuario</th>
+        </tr>
+        {% if miData %}
+        <tr>
+            <td>{{ miData.nombre }}</td>
+            <td>{{ miData.apellidos }}</td>
+            <td>{{ miData.tipoCargo }}</td>
+            <td>{{ miData.nomUsuario }}</td>
+        </tr>
+        {% else %} 
+        <p>{{miData.mensaje}}</p>
+        {% endif %}
+
+    </table>
+    <button href="#" onclick="goBack()">Regresar</button>
+{% endblock%}
