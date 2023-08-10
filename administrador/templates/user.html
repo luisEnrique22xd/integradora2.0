@@ -3,30 +3,57 @@
 {% block title %} Usuarios
 {% endblock %}
 
+{% block subtitle %} Lista de Usuarios{% endblock %}
 {% block content %}
 <script>
     function goBack() {
         window.history.back();
     }
 </script> 
-<h1>Lista de Usuarios</h1>
-    <table border="1">
-        <tr>
+<br>
+<nav class="navbut">
+    <button href="#" onclick="goBack()"  class="button">Regresar</button>
+        <!--<li><a href="#" onclick="goBack()" >Regresar</a></li>-->
+    
+</nav>
+<nav>
+    <div class="search-bar">
+        <form name="formSearch" method="POST" action="{{url_for('buscarUsuario')}}" class="search" autocomplete="off">
+            <input type="search" name="buscar" class="search__input" placeholder="Buscar Usuarios">
+            <button type="submit" class="search__btn">
+                <i class="bi bi-search_icon"></i>
+                Buscar
+            </button>
+        </form>
+    </div>
+</nav>
+<br>
+    <table border="2" class="custom-table">
+        <tr> <th>Id_usuario</th>
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>Tipo de Cargo</th>
             <th>Nombre de Usuario</th>
-            <th>Contraseña</th>
+            <th>Acciones</th>
         </tr>
         {% for usuario in usuario %}
         <tr>
+            <td>{{usuario.idUsuario}}</td>
             <td>{{ usuario.nombre }}</td>
             <td>{{ usuario.apellidos }}</td>
             <td>{{ usuario.tipoCargo }}</td>
             <td>{{ usuario.nomUsuario }}</td>
-            <td>{{ usuario.contrasenia }}</td>
+            <td> 
+                <form method="post" action="{{ url_for('borrarUsu', idUsuario=usuario.idUsuario) }}">
+                    <input type="hidden" name="idUsuario" value="{{ usuario.idUsuario }}">
+                    <button type="submit" onclick="return confirm('¿Seguro que deseas borrar este usuario?')">
+                        <i class="fa fa-trash" style="color: red;"></i>
+                    </button>
+                </form>
+            </td>
+
         </tr>
         {% endfor %}
     </table>
-    <button href="#" onclick="goBack()">Regresar</button>
+
 {% endblock%}

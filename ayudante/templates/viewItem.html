@@ -3,14 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="{{ url_for('static', filename='images/logom.png') }} " type="image/x-icon">
         <title>{% block title %}Item {% endblock %}</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/logom.png') }} " type="image/x-icon">
         <link rel="stylesheet" href="{{ url_for ('static', filename='css/styleform.css') }}">
         <script src="https://kit.fontawesome.com/43e3ba27ff.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
         <script>
             function goBack() {
@@ -21,7 +20,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <a href="{{ url_for('Administrador') }}">
+            <a href="{{ url_for('Ayudante') }}">
             <img src="../static/images/logom.png" src="" alt="logo del museo">
         </a>
         </div>
@@ -29,8 +28,9 @@
             <h2 class="e">{% block subtitle %} Lista de Items {% endblock %}</h2>
             </nav>
         <nav>
+        <nav>
             <ul class="navbar">
-                <li><a href="{{ url_for('Administrador')}}" >Menu</a></li>
+                <li><a href="../../administrador/templates/indexa.html"></a></li>
                 <li><a href="#"></a></li>
                 <li><a href="#"></a></li>
             
@@ -38,22 +38,23 @@
         </nav>
     </header> <br>
     <nav class="navbut">
-        <a href="{{ url_for('registrarItem') }}" class="btn btn-primary ">Registrar + </a>
-            <!--<li><a href="#" onclick="goBack()" >Regresar</a></li>--> &nbsp;&nbsp;&nbsp;&nbsp;
-            <button href="#" onclick="goBack()" class="btn btn-primary "> Regresar</button>
-                                                                         &nbsp;&nbsp;&nbsp;&nbsp;
-            
-  
-        <div class="search-bar">
-            <form name="formSearch" method="POST" action="{{url_for('buscarItem')}}" class="search" autocomplete="off">
-                <input type="search" name="buscar" class="search__input" placeholder="Buscar Items">
-                <button type="submit" class="search__input btn btn-primary ">
-                    <i class="bi bi-search_icon "></i>
-                    Buscar
-                </button>
-            </form>
-        </div>
-    </nav> <br>
+
+            <!--<li><a href="#" onclick="goBack()" >Regresar</a></li>-->
+            <button href="#" onclick="goBack()" class="btn btn-primary" > Regresar</button>
+            &nbsp;&nbsp;
+
+            <nav>
+                <div class="search-bar">
+                    <form name="formSearch" method="POST" action="{{url_for('buscarItem')}}" class="search" autocomplete="off">
+                        <input type="search" name="buscar" class="search__input" placeholder="Buscar Items">
+                        <button type="submit" class="search__btn btn btn-primary">
+                            <i class="bi bi-search_icon"></i>
+                            Buscar
+                        </button>
+                    </form>
+                </div>
+            </nav>
+    </nav>
     <br>
     <table border="2" class="custom-table" >
         <tr>
@@ -64,7 +65,7 @@
             <th>Categoria</th>
             <th>Temporada</th>
             <th>Condicion</th>
-            <th></th>
+          
         </tr>
         {% for item in items%}
         <tr>
@@ -75,20 +76,7 @@
             <td>{{ item.nombre_cat }}</td>
             <td>{{ item.nombreTemp }}</td>
             <td>{{ item.condicion }}</td>
-            <td>
-                <form action="" method="post">
-                    <input type="hidden" name="" value="editar">
-                    <button type="sumbit">
-                        <i class="fa fa-pencil" style="color: green;"></i>
-                    </button>
-                </form>  --
-                 <form method="post" action="">
-                    <input type="hidden" name="" value="eliminar">
-                    <button type="submit" onclick="return confirm('¿Seguro que deseas borrar este item?')">
-                        <i class="fa fa-trash" style="color: red;"></i>
-                    </button>
-                </form>    
-            </td>
+            
         </tr>
         {% endfor %}
     </table>

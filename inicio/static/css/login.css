@@ -1,7 +1,59 @@
-.card-body {
-  display: flex;
-  flex-direction: column;
+
+.card {
+  width: 10px auto;
+  height: 300px auto;
+  background:rgba(255, 255, 255, 0.637);
+  /*box-shadow: 1px 1px 1px 1px rgb(95, 95, 95); borde de la carta*/
+  border-radius: 10px;
+  text-align: justify;
 }
+
+.card-l {
+  width: auto;
+  height:auto;
+  background:rgba(255, 255, 255, 0.637);
+  border-radius: 10px;
+  text-align: justify;
+  padding: 10px;
+}
+
+.conten div{
+
+  display:flexbox;
+  justify-content: center;
+  background-image:url('../static/images/f.jpg');
+}
+
+.container div{
+  
+  justify-content: center;
+  flex-direction: column;
+  text-align: justify;
+}
+
+
+.card-body {
+  justify-content: center;
+  flex-direction: column;
+  text-align: justify;
+}
+
+
+form {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Bebas Neure', sans-serif;
+
+
+
+  display: grid;
+  justify-content: center;
+  align-items: start;
+  justify-items: center;
+
+
+}
+
 
 .form-row {
   display: flex;

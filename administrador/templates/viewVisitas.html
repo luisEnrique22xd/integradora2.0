@@ -1,0 +1,40 @@
+{% extends "basead.html" %}
+
+{% block title %} Visitas
+{% endblock %}
+{% block subtitle %} Lista de Visitas
+{% endblock %}
+{% block content %}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+    <br>
+    <nav class="navbut">
+
+            <button href="#" onclick="goBack()" class="button"> Cancelar</button>
+            
+    </nav>
+    <br>
+    <table border="3" class="custom-table">
+        <tr>
+            <th>ID</th>
+            <th>Nombre Completo</th>
+            <th>Numero de visitantes</th>
+            <th>Fecha de Visita</th>
+            <th>Tipo de visita</th> 
+        </tr>
+        {% for visita in visitas %}
+        <tr>
+            <td>{{ visita['id_visita'] }}</td>
+            <td>{{ visita["Nombre Completo"]}}</td>
+            <td>{{ visita["Numero de visitantes"] }}</td>
+            <td>{{ visita["Fecha de Visita"] }}</td>
+            <td>{{ visita["Tipo de visita"] }}</td>
+           
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %} 

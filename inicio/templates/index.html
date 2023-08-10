@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logom.png') }} " type="image/x-icon">
+    <title>Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://kit.fontawesome.com/43e3ba27ff.js" crossorigin="anonymous"></script>
 </head>
@@ -11,28 +12,40 @@
     <!--encabezado-->
     <header class="header">
         <div class="logo">
-            <img src="../static/images/logom.png"  alt="logo del museo">
+            <img src="../static/images/logom.png" alt="logo del museo">
         </div>
+
+        <nav>
+            <h2 class="b"> BIENVENIDO </h2></nav>
         <nav>
             <ul class="navbar">
-                <li><a href="{{ url_for('login') }}">Iniciar Sesion</a></li>
-                <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
-                <li><a href="#">agregar cita?</a></li>
-            
+                <li><a href="{{ url_for('registro') }}" class="buttonY">Soy nuevo</a></li>
+                <li><a href="{{ url_for('login') }}" class="buttonY">Iniciar Sesion</a></li>
+
             </ul>
         </nav>
     </header>
+    <br>
+     <strong> <center><h1>  Museo de la Ciudad de Huamantla </h1></center> </strong>  
     <!--cuerpo-->
-
-<h1> "Descubre la historia que cobra vida a través del arte en nuestro museo, 
-    un lugar donde el pasado se entrelaza con la belleza eterna."</h1>
-<div class="slider-frame">
+<div class="slider-frame">   
+    <hr > 
+    
+    <h2> "Descubre la historia que cobra vida a través del arte en nuestro museo, 
+        un lugar donde el pasado se entrelaza <br> con la belleza eterna."</h2>
+        <br>
     <ul>
-        <li><img src="../static/images/slide1.jpg" alt=""></li>
-        <li><img src="../static/images/slide2.jpg" alt=""></li>
-        <li><img src="../static/images/slide3.jpg" alt=""></li>
-        <li><img src="../static/images/slide4.jpg" alt=""></li>
-    </ul>
+        <li><img src="../static/images/descarga.jpg" alt=""></li>
+        <li><img src="../static/images/f.jpg" alt=""></li>
+        <li><img src="../static/images/fondix.jpg" alt=""></li>
+        <li><img src="../static/images/Galeria2.jpg" alt=""></li>
+        <li><img src="../static/images/Galeria9.jpg" alt=""></li>
+        <li><img src="../static/images/mas.jpg" alt=""></li>
+        <li><img src="../static/images/Museo.jpg" alt=""></li>
+        <li><img src="../static/images/opc.jpg" alt=""></li>
+    </ul>    <br>
+    <hr >
+    <br>
 </div>
     <!-- pie de pagina--> 
 <footer class="footer">

@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Bebas Neure', sans-serif;
+    font-size: 20px;
+}
+body{
+    background-color: white;
+}
+/* estilos encabezado*/
+.header{
+    background-color:  #041a2cee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 5px 10%;
+
+}
+.header .logo{
+    cursor: pointer;
+}
+.header .logo img{
+   
+    height: 100px;
+    width: auto;
+    transition: all 0.3s;
+}
+.header .logo img:hover{
+    transform: scale(1,1.1);
+}
+
+.header .navbar{
+    list-style: none;
+
+}
+
+.header .navbar li{
+    display: inline-block;
+    padding: 0 20px;
+}
+.header .navbar li:hover{
+    transform: scale(1.1);
+}
+.header .navbar a{
+    font-size: 700;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-family: 'PT Serif', serif;
+}
+.header .navbar li a:hover{
+    background-color: rgba(128, 128, 128, 0.404) ;
+
+}
+
+a.b{
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px;
+    display: block;
+    font-size: 18px;
+}
+/* Media Query para hacer el sitio responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    nav li {
+        display: block;
+        margin: 5px 0;
+    }
+
+    nav a {
+        padding: 5px;
+    }
+}
+
+h2.e{
+color: #ffffff;
+font-family: 'Libre Baskerville', serif;
+font-size: 50px;
+
+Text-shadow:3px  3px  3px  rgba(85, 90, 94, 0.829)
+}
+
+
+
+/* Estilo para el slider */
+.slider-container {
+    width: 50%; /* El ancho del slider que ocupará en el lado izquierdo */
+    float: right; /* Para alinear el slider a la izquierda */
+          /*par el hr */
+    box-align: flex-start;
+
+    height: auto;
+    margin: 50px auto 0;
+    overflow: hidden;
+    max-width: 100%;
+    height: auto;
+
+}
+
+.slider-frame {
+    width: 1080px;
+    height: auto;
+    margin: 50px auto 0;
+    max-width: 100%;
+    height: auto;
+
+    
+}
+.slider-frame ul{
+    display: flex;
+    padding: 0;
+    width: 400%;
+    animation: slides 15s   infinite   step-end ;
+    /*animation: slides 16s infinite alternate ease-in-out;*/
+}
+.slider-frame li{
+    list-style: none;
+    width: 100%;
+}
+.slider-frame img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+@keyframes slides {
+    0% { margin-left: 0%; }
+    20% { margin-left: 0%; }
+
+    25% { margin-left: -100%; }
+    45% { margin-left: -100%; }
+
+    50% { margin-left: -200%; }
+    70% { margin-left: -200%; }
+
+    75% { margin-left: -300%; }
+    95% { margin-left: -300%; }
+}
+
+
+
+
+
+/* ... Resto del CSS ...  modificar el contenido*/
+
+
+.container {
+    display: flex;
+    align-items: flex-wrap;
+    background-color: #1976d200;
+    
+}
+
+
+.options {
+    flex: 100;
+    padding: 20px;
+    background-color: #8a000000;
+    box-sizing: border-box; /* Incluir relleno y bordes en el tamaño */
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    flex-direction: column;
+}
+
+/* Estilos para los bloques de opciones */
+.option-item {
+    padding: 15px;
+    border: 2px solid ;
+    margin-bottom: 10px;
+    position:-ms-page;
+    border-radius: 5px;
+
+
+}
+
+/* Estilos para los íconos */
+.option-item i {
+    margin-right: 10px;
+    font-size: 20px;
+    box-sizing: border-box;
+    -ms-flex-align: stretch;
+}
+
+/* Estilos para cada opción de color */
+.option-insert {
+    background-color: #c3e4ffad;
+    border-color: #1976D2;
+}
+
+.option-modify {
+    background-color: #84faabaf;;
+    border-color: #45A049;
+}
+
+.option-view {
+    background-color: #f5fc91;
+    border-color: #FFA000;
+ 
+
+}
+
+.option-report {
+    background-color: #ffc172;
+    border-color: #ff5e00;
+}
+
+/* Estilos adicionales */
+.options h2 {
+    color: #333;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-family: 'Libre Baskerville', serif;
+    
+
+}
+
+
+.options ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.options li {
+    margin-bottom: 10px;
+}
+
+/*estilos pie de pagina */
+.footer{
+   
+    width: 100%;
+    background-color: #0d1e2bec;
+    
+  }
+  .footer .gruop1{
+    width: 100%;
+    max-width: grid;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 50px;
+    padding: 45px 0px;
+  }
+  .footer .gruop1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .footer .gruop1 .box figure img{
+    width: 250px;
+  }
+  .footer .gruop1 .box h2{
+    color: white;
+    margin-bottom: 25px;
+    font-size: 20px;
+  }
+  .footer .gruop1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+  }
+  .footer .gruop1 .socialmedia a{
+    display: inline-block;
+    text-decoration: none;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    margin-right: 10px;
+    background-color: #0d2023;
+    text-align: center;
+    transition: all 300ms ease;
+  }
+  .footer .gruop1 .socialmedia a:hover{
+    color: aqua;
+  }
+  .footer .g2{
+    background-color: #0a1a2a;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+  }
+  .footer .g2 small{
+    font-size: 15px;
+  }
+  @media screen and (max-width: 800px){
+    .footer .gruop1{
+        width: 90%;
+        grid-template-columns: repeat(1,1fr);
+        grid-gap:30px;
+        padding: 35px 0px;
+    }
+  }
+  /* Estilos para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    /* Agrega estilos específicos para pantallas más pequeñas aquí */
+  }
+  
+  /* Estilos para pantallas medianas */
+  @media (min-width: 769px) and (max-width: 992px) {
+    /* Agrega estilos específicos para pantallas medianas aquí */
+  }
+  
+  /* Estilos para pantallas grandes */
+  @media (min-width: 993px) {
+    /* Agrega estilos específicos para pantallas grandes aquí */
+  }
+  
+  
+  /* Estilos base para el botón de registrar + */
+  .button {
+    display: inline-block;
+    padding: 5px 5px;
+    background-color: #5a7081ec;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    border-color: #0a1a2a;
+    border: 2px;
+    cursor: pointer;
+    font-size:20px; /* Ajusta el tamaño de fuente para hacer el texto más pequeño */
+  
+  }
+  /* Estilos cuando se hace clic en el botón  cambio de color  agregar esto en los botones */
+  .button:active {
+    background-color: #3e8000;
+  }

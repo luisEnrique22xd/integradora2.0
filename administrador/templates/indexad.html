@@ -1,57 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador</title>
-    <link rel="stylesheet" href="{{ url_for ('static', filename='css/styles.css') }}">
-        <script src="https://kit.fontawesome.com/43e3ba27ff.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-</head>
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/logom.png') }} " type="image/x-icon">
+        <title>Sesion_Administrador</title>
+        <!-- ... Resto del código ... -->
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesInd.css') }}">
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+    
 <body>
-<header class="header">
-    <div class="logo">
-        <a href="{{ url_for('Administrador')}}">
-        <img src="../static/images/logom.png" alt="logo del museo">
-        </a>
-    </div>
-    <nav>
-        <ul class="navbar">
-            <li><a href="{{ url_for('registrarItem') }}">Registrar Item</a></li>
-            <li><a href="{{ url_for('item') }}">Ver inventario</a></li>
-            <li><a href="{{ url_for('usuario') }}">Ver usuarios del sistema</a></li>
-            <li><a href="{{ url_for('inicio.index') }}">Cerrar Sesion</a></li>
-        </ul> 
-    </nav>
+    
+    <header class="header">
+        <div class="logo">
+            <a href="{{ url_for('Administrador')}}">
+            <img src="../static/images/logom.png" alt="logo del museo">
+            </a>
+        </div> 
+        
+        <nav >
+        <h2 class="e">Bienvenido Administrador</h2>
+        </nav>
+
+        <nav >
+            <ul class="navbar">
+                <li class="bu"><a  class="button" href="{{ url_for('close') }}">Cerrar Sesion</a></li></ul>
+        </nav>
+
+
 </header>
-<h1>Bienvenido</h1>
-<footer class="footer">
-    <div class="gruop1">
-        <div class="box">
-            <figure>
-                <a href="#">
-                    <img src="../static/images/logom.png" alt="Logo"> </a>
-            </figure>
-        </div>
-        <div class="box">
-            <h2>Sobre nosotros</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, expedita.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, expedita.</p>
-        </div>
-        <div class="box">
-            <h2>Siguenos</h2>
-            <div class="socialmedia">
-                <a href="#" class="fa fa-facebook"></a>
-                <a href="#" class="fa fa-instagram"></a>
-                <a href="#" class="fa fa-twitter"></a>
-                <a href="#" class="fa fa-youtube"></a>
+    <main>
+        <div class="container">
+        <section class="slider-container ">
+            <hr  size="1" style="border: 1px solid #FFA000;">
+            <div class="slider-frame"> 
+               
+                <ul>
+                <li><img src="../static/images/descarga.jpg" alt=""></li>
+                 <li><img src="../static/images/f.jpg" alt=""></li>
+                 <li><img src="../static/images/fondix.jpg" alt=""></li>
+                 <li><img src="../static/images/Galeria2.jpg" alt=""></li>
+                 <li><img src="../static/images/Galeria9.jpg" alt=""></li>
+                 <li><img src="../static/images/mas.jpg" alt=""></li>
+                 <li><img src="../static/images/Museo.jpg" alt=""></li>
+                 <li><img src="../static/images/opc.jpg" alt=""></li>
+                <!-- Agrega más imágenes al slider --> </ul>
+               
+            </div> <br> <hr  size="1" style="border: 1px solid #FFA000;">
+        </section> <br>
+        <section class="options">
+            <h2  >Opciones que tenemos para ti...</h2>
+            <ul>
+                <li class="option-item option-insert">
+                    <i class="fas fa-plus"></i> <!-- Icono de añadir -->
+                    <a href="{{ url_for('registrarItem') }}">Registra Item</a>
+                </li>
+                <li class="option-item option-view">
+                    <i class="fas fa-eye"></i> <!-- Icono de ojo -->
+                    <a href="{{ url_for('item') }}">Visualizar Inventario</a>
+                </li>
+                <li class="option-item option-modify">
+                    <i class="fas fa-eye"></i> <!-- Icono de lápiz -->
+                    <a href="{{ url_for('usuario') }}">Visualizar usuario</a>
+                </li>
+                
+                <li class="option-item option-modify">
+                    <i class="fas fa-eye"></i> <!-- Icono de lápiz -->
+                    <a href="{{ url_for('viewVisitas') }}">Visualizar Visitas</a>
+                </li>
+
+                <li class="option-item option-report">
+                    <i class="fas fa-file-signature"></i> <!-- Icono de hoja de registro -->
+                    <a href="{{ url_for('reporte') }}">Reportes</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+    </main> 
+<br>
+    <footer class="footer">
+        <div class="gruop1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="../static/images/logom.png" alt="Logo"> </a>
+                </figure>
             </div>
-            
+            <div class="box">
+                <h2>Sobre nosotros</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, expedita.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, expedita.</p>
+            </div>
+            <div class="box">
+                <h2>Siguenos</h2>
+                <div class="socialmedia">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+                
+            </div>
         </div>
-    </div>
-    <div class="g2">
-        <small>&copy;2023 <b>Secretaria de Turismo</b>- Todos los Derechos Reservados</small>
-    </div>
-</footer> 
+        <div class="g2">
+            <small>&copy;2023 <b>Secretaria de Turismo</b>- Todos los Derechos Reservados</small>
+        </div>
+    </footer> 
+
+    <!-- ... Resto del código ... -->
 
 </body>
+
 </html>
+
+
+
