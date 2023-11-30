@@ -13,7 +13,7 @@ from models.db import get_connection
 usuarios_registrados = []
 visitantes_registrados = []
 items_registrados = []
-visitas=[]
+visitas = [];
 
 
 app = Flask(__name__, template_folder='inicio/templates' , static_folder='inicio/static' )
