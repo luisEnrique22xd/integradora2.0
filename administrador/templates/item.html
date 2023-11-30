@@ -38,7 +38,7 @@
         </nav>
     </header> <br>
     <nav class="navbut">
-        <a href="{{ url_for('registrarItem') }}" class="btn btn-primary ">Registrar + </a>
+        <a href="{{ url_for('registrarItem') }}" class="btn btn-primary">Registrar + </a>
             <!--<li><a href="#" onclick="goBack()" >Regresar</a></li>--> &nbsp;&nbsp;&nbsp;&nbsp;
             <button href="#" onclick="goBack()" class="btn btn-primary "> Regresar</button>
                                                                          &nbsp;&nbsp;&nbsp;&nbsp;
@@ -57,6 +57,7 @@
     <br>
     <table border="2" class="custom-table" >
         <tr>
+            <th>ID</th>
             <th>Nombre</th>
             <th>Origen</th>
             <th>Modo de Adquisicion</th>
@@ -68,6 +69,7 @@
         </tr>
         {% for item in items%}
         <tr>
+            <td>{{ item.id_item}}</td>
             <td>{{ item.nombre }}</td>
             <td>{{ item.lugar }}</td>
             <td>{{ item.modo }}</td>
@@ -76,19 +78,13 @@
             <td>{{ item.nombreTemp }}</td>
             <td>{{ item.condicion }}</td>
             <td>
-                <form action="" method="post">
-                    <input type="hidden" name="" value="editar">
-                    <button type="sumbit">
-                        <i class="fa fa-pencil" style="color: green;"></i>
-                    </button>
-                </form>  --
-                 <form method="post" action="">
-                    <input type="hidden" name=" value="eliminar">
-                    <button type="submit" onclick="return confirm('¿Seguro que deseas borrar este vitem?')">
+                  <form method="post" action="{{ url_for('borrarItem', id_item=item.id_item) }}">
+                    <input type="hidden" name="id_item" value="{{ item.id_item }}">
+                    <button type="submit" onclick="return confirm('¿Seguro que deseas borrar este item?')">
                         <i class="fa fa-trash" style="color: red;"></i>
                     </button>
-                </form>    
-            </td>
+                </form> 
+            </td> 
         </tr>
         {% endfor %}
     </table>

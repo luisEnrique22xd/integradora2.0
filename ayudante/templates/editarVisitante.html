@@ -1,22 +1,8 @@
 {% extends "baseay.html" %}
 
-<<<<<<< HEAD
 {% block title %} Editar Visitante {% endblock %}
 {% block subtitle %} Editar datos del Visitante{% endblock %}
-
 {% block content %}
-{% for visitante in visitante %}
-        <tr>
-            <td>{{ visitante.id_visitante }}</td>
-            <td>{{ visitante.nombre }}</td>
-            <td>{{ visitante.ape_pat }}</td>
-            <td>{{ visitante.ape_Mat }}</td>
-            <td>{{ visitante.Origen }}</td>
-            <td>{{ visitante.edad }}</td>
-            <td>{{ visitante.genero }}</td>
-            <td>{{ visitante.institucion }}</td>
-            <td>{{ visitante.fecha_registro }}</td>
-            <td>
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
                 <link rel="stylesheet" href="">
@@ -26,9 +12,7 @@
 
             <form method="post" action="{{ url_for('editar_visitante', id_visitante=visitante.id_visitante) }}">
                 
-                <p>{{visitante.id_visitante}}</p>
-                
-                <input type="text" name="id_visitante" id="id_visitante" value="{{ visitante.id_visitante }}">
+                <p>id visitante:{{ visitante.id_visitante }}</p>
                 
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" value="{{ visitante.nombre }}" required><br>
@@ -63,11 +47,5 @@
             <br>
         </div>
     </div>
-                </div>
-{% endfor %}
+    </div>
 {% endblock %}
-=======
-{% block content %}
-<h1>Editar Visitante</h1>
-{% endblock %}
->>>>>>> f988f02abbc44b1aa040ea2902919cefadb2d09d

@@ -18,7 +18,7 @@
         padding: 10px;
         border: 1px solid #ccc;
         position: absolute;
-        right: 15px;
+        right: 125px;
         bottom: 240px;
         float: right;
       }
@@ -87,47 +87,60 @@
                     <button href="#" onclick="goBack()"  class="btn btn-primary" > Regresar</button>
             
                 </form></div>
-            </section></div>
-        </div>
-<aside>
-            <section class="options">
-                <h5>Formularios para Origen, categora y temporada</h5>
-                <ul>
-                <li class="option-item"> <button id="mostrar-formulario1" onclick="toggleFormulario('formulario-flotante1')"   class= "btn btn-primary">Nuevo Origen</button></li><br>
-                <li class="option-item"> <button id="mostrar-formulario1" onclick="toggleFormulario('formulario-flotante2')"  class="btn btn-primary">Nueva Categoria</button></li><br>
-                <li class="option-item"> <button id="mostrar-formulario1" onclick="toggleFormulario('formulario-flotante3')"  class="btn btn-primary">Nuevo Temporada</button></li>
-               </ul>
-                <div id="formulario-flotante1" class="formulario-flotante" style="display: none;">
-                    <form action="{{ url_for('registrarOrigen') }}" method="post">
-                       
-                        <input type="text" name="lugar" placeholder="Origen">
-                        <button type="submit">Enviar</button>
-                    </form>
-                </div>
-                <div id="formulario-flotante2" class="formulario-flotante" style="display: none;">
-                    <form action="{{ url_for('registrarCategoria') }}" method="post">
-                       
-                        <input type="text" name="nombre_cat" placeholder="Categoria">
-                        <button type="submit">Enviar</button>
-                    </form>
-                </div>
-                <div id="formulario-flotante3" class="formulario-flotante" style="display: none;">
-                    <form action="{{ url_for('registrarTemporada') }}" method="post">
-                        <input type="text" name="nombreTemp" placeholder="Temporada">
-                        <input type="date" name="fecha_inicio" id="fecha_inicio">
-                        <input type="date" name="fecha_final" id="fecha_final">
-                        <button type="submit">Enviar</button>
-                    </form>
-                </div>
-                <script>
-                    function toggleFormulario(id) {
-                      var formulario = document.getElementById(id);
-                      formulario.style.display = formulario.style.display === "none" ? "block" : "none";
-                    }
-                    </script>
-                </section></aside>   
+            </section>
+        
+        
             
+        </div>
+        </div>
+  
+       
 
     </div>
+
+
+
+
+    
 </main>
+
+<aside>
+    <section class="options">
+        <h5>Agregar</h5>
+        <ul>
+        <li class="option-item"> <button id="mostrar-formulario1" onclick="toggleFormulario('formulario-flotante1')"   class= "btn btn-primary">Nuevo Origen</button></li><br>
+        <li class="option-item"> <button id="mostrar-formulario1" onclick="toggleFormulario('formulario-flotante2')"  class="btn btn-primary">Nueva Categoria</button></li><br>
+        <li class="option-item"> <button id="mostrar-formulario1" onclick="toggleFormulario('formulario-flotante3')"  class="btn btn-primary">Nuevo Temporada</button></li>
+       </ul>
+        <div id="formulario-flotante1" class="formulario-flotante" style="display: none;">
+            <form action="{{ url_for('registrarOrigen') }}" method="post">
+               
+                <input type="text" name="lugar" placeholder="Origen">
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+        <div id="formulario-flotante2" class="formulario-flotante" style="display: none;">
+            <form action="{{ url_for('registrarCategoria') }}" method="post">
+               
+                <input type="text" name="nombre_cat" placeholder="Categoria">
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+        <div id="formulario-flotante3" class="formulario-flotante" style="display: none;">
+            <form action="{{ url_for('registrarTemporada') }}" method="post">
+                <input type="text" name="nombreTemp" placeholder="Temporada">
+                <input type="date" name="fecha_inicio" id="fecha_inicio">
+                <input type="date" name="fecha_final" id="fecha_final">
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+        <script>
+            function toggleFormulario(id) {
+              var formulario = document.getElementById(id);
+              formulario.style.display = formulario.style.display === "none" ? "block" : "none";
+            }
+            </script>
+        </section></aside> 
+
+
 {% endblock %}

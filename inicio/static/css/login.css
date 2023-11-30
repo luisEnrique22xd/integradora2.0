@@ -2,7 +2,7 @@
 .card {
   width: 10px auto;
   height: 300px auto;
-  background:rgba(255, 255, 255, 0.637);
+  background:rgba(160, 158, 158, 0.74);
   /*box-shadow: 1px 1px 1px 1px rgb(95, 95, 95); borde de la carta*/
   border-radius: 10px;
   text-align: justify;
@@ -11,7 +11,7 @@
 .card-l {
   width: auto;
   height:auto;
-  background:rgba(255, 255, 255, 0.637);
+  background:rgba(160, 158, 158, 0.74);
   border-radius: 10px;
   text-align: justify;
   padding: 10px;
@@ -27,7 +27,7 @@
 .container div{
   
   justify-content: center;
-  flex-direction: column;
+  flex-direction: column; 
   text-align: justify;
 }
 
@@ -66,3 +66,4 @@ form {
   padding-right: 5px;
   padding-left: 5px;
 } 
+

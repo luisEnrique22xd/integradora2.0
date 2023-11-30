@@ -1,6 +1,14 @@
-from flask import Flask, render_template, request, session, redirect, url_for, Blueprint, flash, jsonify
+from flask import Flask, render_template, request, session, redirect, url_for, Blueprint, flash, Response
 import mysql.connector
 import os
+import io
+from reportlab.lib.pagesizes import letter,landscape
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Image, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus.flowables import PageBreak
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
 from models.db import get_connection
 usuarios_registrados = []
 visitantes_registrados = []
@@ -22,7 +30,7 @@ app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(ayudante_bp, url_prefix='/ayudante')
 app.secret_key= os.urandom(24)
 
-@app.route('/inicio', endpoint='inicio.index')
+@app.route('/', endpoint='inicio.index')
 def inicio():
     return render_template("index.html")
 
@@ -129,10 +137,13 @@ def login():
 @app.route('/Administrador')
 def Administrador():
     # Lógica para la sesión de administrador
-    if session['usuario']['tipoCargo'] == 'Administrador':
-        return render_template('indexad.html')
+    if session:
+        if session['usuario']['tipoCargo'] == 'Administrador':
+            return render_template('indexad.html')
+        else:
+            return redirect (url_for('Ayudante'))
     else:
-        return redirect (url_for('Ayudante'))
+        return redirect(url_for('login'))
     
 #borrar usuarios
 #Para borrar ya sirve
@@ -193,8 +204,8 @@ def registrarItem():
             cursor.close()
             mydb.close()
 
-            # Redireccionar a la página de inicio después de registrar al usuario
-            return redirect(url_for('registrarItem'))
+            # Redireccionar a la página de inicio después de registrar al item
+            return redirect(url_for('Administrador'))
 
         except Exception as e:
             # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
@@ -262,6 +273,8 @@ def registrarOrigen():
             print("Error al insertar datos en la base de datos:", str(e))
             return render_template('error.html', mensaje='Error al registrar al origen')
     return render_template('registrarItem.html')    
+
+
        
 @app.route("/registrarCategoria", methods=['GET','POST'])
 def registrarCategoria():    
@@ -344,7 +357,7 @@ def item():
         try: 
           mydb = get_connection()
           cursor = mydb.cursor(dictionary=True)
-          cursor.execute('SELECT * FROM items')
+          cursor.execute('SELECT item.id_item, item.nombre, origenitem.lugar, modadqui.modo, item.fecha_registro,categoria.nombre_cat, temporada.nombreTemp, item.condicion FROM item INNER JOIN modadqui ON item.modAdqui = modadqui.Adqui  INNER JOIN categoria ON item.categoria = categoria.categoria INNER JOIN origenitem ON item.origen = origenitem.id_origen INNER JOIN temporada ON item.temporada = temporada.temporada')
           items = cursor.fetchall()
           print(items)
           return render_template('item.html', items=items)
@@ -377,10 +390,13 @@ def reporte():
 @app.route('/Ayudante')
 def Ayudante():
     # Lógica para la sesión de ayudante
-    if session['usuario']['tipoCargo'] == 'Ayudante':
+    if session: 
+     if session['usuario']['tipoCargo'] == 'Ayudante':
         return render_template('indexay.html')
-    else:
+     else:
         return redirect (url_for('Administrador'))
+    else: 
+        return redirect(url_for('login'))
 
 
 @app.route("/registroVisitante", methods=['GET','POST'])
@@ -439,11 +455,10 @@ def formeditarvisitante(id_visitante):
         if request.method == 'POST':
             # Obtener la conexión a la base de datos
             mydb = get_connection()
-            cursor = mydb.cursor()
-
+            cursor = mydb.cursor(dictionary=True)
             # Ejecutar la consulta SQL
             cursor.execute("SELECT * FROM visitante WHERE id_visitante=%s", (id_visitante,))
-            visitante = cursor.fetchall()
+            visitante = cursor.fetchone()
             # Confirmar los cambios en la base de datos
             mydb.commit()
 
@@ -593,7 +608,7 @@ def formeditarvisita(id_visita):
     if request.method == 'POST':
         # Obtener la conexión a la base de datos
         mydb = get_connection()
-        cursor = mydb.cursor()
+        cursor = mydb.cursor(dictionary=True)
 
         # Ejecutar la consulta SQL para obtener la visita por su ID
         cursor.execute("SELECT * FROM visitas WHERE id_visita=%s", (id_visita,))
@@ -703,6 +718,17 @@ def usuario():
     # Renderiza la plantilla HTML con los resultados
     # cambie el usuario= usuarios 
 
+@app.route('/usuarioElimin')
+def usuarioElimin():
+    with mydb.cursor(dictionary=True) as cursor:
+    #cursor = mydb.cursor(dictionary=True)
+        usuariosEli = []
+        cursor.execute('SELECT * FROM `usuarioseliminados`')
+        usuariosEli = cursor.fetchall()
+        #cursor.close()
+        print(usuariosEli)
+        return render_template('userElimin.html', usuariosEli=usuariosEli)
+
 @app.route("/buscarUsuario", methods=['GET', 'POST'])
 def buscarUsuario():
     if request.method == "POST":
@@ -719,6 +745,103 @@ def buscarUsuario():
     return render_template('buscarUser.html', miData = busqueda, busqueda = search)
 
 
+
+@app.route("/repUsuario")
+def repUsuario():
+   pdf_buffer = io.BytesIO()
+   p = canvas.Canvas(pdf_buffer, pagesize=letter)
+
+    # Agrega contenido al PDF
+   p.drawString(100, 750, "¡Hola, este es mi PDF!")
+   p.showPage()
+   p.save()
+
+   pdf_data = pdf_buffer.getvalue()
+   pdf_buffer.close()
+
+   response = Response(pdf_data, content_type='application/pdf')
+   response.headers['Content-Disposition'] = 'attachment; filename="mi_documento.pdf"'
+   return response
+
+@app.route("/repItem")
+def repItem():
+   pdf_buffer = io.BytesIO()
+   p = canvas.Canvas(pdf_buffer, pagesize=letter)
+
+    # Agrega contenido al PDF
+   p.drawString(100, 750, "¡Hola, este es mi PDF!")
+   p.showPage()
+   p.save()
+
+   pdf_data = pdf_buffer.getvalue()
+   pdf_buffer.close()
+
+   response = Response(pdf_data, content_type='application/pdf')
+   response.headers['Content-Disposition'] = 'attachment; filename="mi_documento.pdf"'
+   return response
+
+@app.route("/repVisitante")
+def repVisitante():
+   pdf_buffer = io.BytesIO()
+   p = canvas.Canvas(pdf_buffer, pagesize=letter)
+
+    # Agrega contenido al PDF
+   p.drawString(100, 750, "¡Hola, este es mi PDF!")
+   p.showPage()
+   p.save()
+
+   pdf_data = pdf_buffer.getvalue()
+   pdf_buffer.close()
+
+   response = Response(pdf_data, content_type='application/pdf')
+   response.headers['Content-Disposition'] = 'attachment; filename="mi_documento.pdf"'
+   return response
+
+@app.route("/repVisita")
+def repVisita():
+   pdf_buffer = io.BytesIO()
+   p = canvas.Canvas(pdf_buffer, pagesize=letter)
+
+    # Agrega contenido al PDF
+   p.drawString(100, 750, "¡Hola, este es mi PDF!")
+   p.showPage()
+   p.save()
+
+   pdf_data = pdf_buffer.getvalue()
+   pdf_buffer.close()
+
+   response = Response(pdf_data, content_type='application/pdf')
+   response.headers['Content-Disposition'] = 'attachment; filename="mi_documento.pdf"'
+   return response
+
+
+#Para borrar ya sirve
+@app.route('/borrarItem/<int:id_item>', methods=['GET', 'POST'])
+def borrarItem(id_item):
+    if request.method == 'POST':
+        try:
+            # Obtener la conexión a la base de datos
+            mydb = get_connection()
+            cursor = mydb.cursor()
+
+            # Ejecutar la consulta SQL para borrar el visitante
+            cursor.execute("DELETE FROM item WHERE id_item=%s", (id_item,))
+
+            # Confirmar los cambios en la base de datos
+            mydb.commit()
+
+            # Redireccionar a la página de visitante después de borrar el registro
+            return redirect('/item')
+
+        except Exception as e:
+            # Si ocurre algún error, imprimirlo en la consola y mostrar un mensaje de error al usuario
+            print("Error al borrar el item:", str(e))
+            return render_template('error.html', mensaje='Error al borrar el item')
+
+    # Si se accede al endpoint con una solicitud GET, simplemente redirigir a la página de visitante
+    return redirect('/item')
+
+#*+++++++++++++++++++++++++++++++++++++++
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

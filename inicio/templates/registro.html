@@ -13,26 +13,26 @@
         <div class="card-body"> 
         <form action="{{ url_for('registro') }}" method="POST" >
             <div class="form-group">
-            <label for="nombre">Nombre:</label>
+            <label for="nombre"><strong>Nombre:</strong></label>
             <input type="text" id="nombre" name="nombre" required placeholder="Ingresa tu nombre" class="form-control"><br>
             </div>
             <div class="form-group">
-            <label for="apellidos">Apellidos:</label>
+            <label for="apellidos"><strong>Apellidos:</strong></label>
             <input type="text" id="apellidos" name="apellidos" required placeholder="Ingresa tus apellidos" class="form-control"><br>
             <!--placeholder="Ingresa tu nombre" para las cajas de texto -->
             </div>
             <div class="form-group">
-            <label for="tipoCargo">Cargo:</label>
+            <label for="tipoCargo"><strong> Cargo:</strong></label>
             <select id="tipoCargo" name="tipoCargo" required>
                 <option value="Administrador">Administrador</option>
                 <option value="Ayudante">Ayudante</option>
             </select></div><br>
             <div class="form-group">
-            <label for="nomUsuario">Nombre de usuario:</label>
+            <label for="nomUsuario"><strong>Nombre de usuario:</strong></label>
             <input type="text" id="nomUsuario" name="nomUsuario" required placeholder="Ingresa tu usuario" class="form-control"><br>
             </div>
             <div class="form-group">
-            <label for="password">Contraseña:</label>
+            <label for="password"><strong>Contraseña:</strong></label>
             <input type="password" id="password" name="password" required class="form-control"><br>
             </div>
             <input type="submit" value="Registrarse" class="btn btn-primary">
